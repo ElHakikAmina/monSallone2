@@ -55,7 +55,6 @@
       time_on: "",
       time_out: "",
       jour: "",
-     
       id: undefined,
       id_reservation: undefined,
       toDashboard: false,
@@ -64,9 +63,9 @@
   },
   methods: {
     async chekCreneau() {
-      console.log(sessionStorage.getItem("pageAjouter"));
-      console.log(sessionStorage.getItem("pageUpdate"));
-      console.log(12);
+    //   console.log(sessionStorage.getItem("pageAjouter"));
+    //   console.log(sessionStorage.getItem("pageUpdate"));
+    //   console.log(12);
       const data = {
         jour: this.jour,
       };
@@ -88,15 +87,12 @@
     },
 
     async inserer() {
-      if (sessionStorage.getItem("pageAjouter") == "true") {
         console.log(sessionStorage.getItem("pageAjouter"));
-        console.log(this.id);
-
         const data = {
           time_on: this.id.time_on,
           time_out: this.id.time_out,
           jour: this.jour,
-         
+          //note: this.note,
           reference: sessionStorage.getItem("reference"),
         };
         console.log(data);
@@ -110,47 +106,25 @@
           }
         );
 
+
         if (res.status === 200) {
-          this.toDashboard = true;
-          this.redirection();
+            this.redirection();
+        console.log(res)
         }
-      } else if (sessionStorage.getItem("pageUpdate") == "true") {
-        const info = {
-          time_on: this.id.time_on,
-          time_out: this.id.time_out,
-          jour: this.jour,
-          
-          id_reservation: this.id_reservation,
-        };
 
-        var rese = await fetch(
-          "http://localhost/monsalonline/ApiCrudsReservation/updateReservation",
-          {
-            method: "POST",
-            header: "Content-type: application/json",
-
-            body: JSON.stringify(info),
-          }
-        );
-
-        if (rese.status === 200) {
-          this.toDashboard = true;
-          this.redirection();
-        }
-      }
     },
 
     redirection() {
-      if (this.toDashboard == true) {
+    //    rediger vers un autre url ou bien un autre componenet
         this.$router.push({ path: "/dashboard" });
-      }
+      
     },
   },
   async created() {
     if (sessionStorage.getItem("pageUpdate") == "true") {
       console.log(sessionStorage.getItem("pageUpdate"));
       this.jour = sessionStorage.getItem("jour");
-      
+      //this.note = sessionStorage.getItem("note");
       this.id_reservation = sessionStorage.getItem("id_reservation");
     }
   },

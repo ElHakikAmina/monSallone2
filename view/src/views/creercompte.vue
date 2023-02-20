@@ -1,9 +1,12 @@
 
 <template>
+          <span v-html="alert_msg"></span>
+        <span v-html="alert_ref"></span>
     <div class="flex flex-row border p-5 rounded mx-5 mt-20">
         <div class="hidden md:block w-2/4">
             <img src="../assets/barbier2.jpg" class="w-full" alt="">
         </div>
+
         <div class="mx-auto w-full px-3 ml-5 md:w-2/4 lg:1/2">
             <div>
                 <span class="lato text-center mb-5 text-2xl font-bold">Pour prendre un Rendez-vous enligne, Vous devez créer un compte.
@@ -49,7 +52,6 @@ export default {
         prenom: this.prenom,
         tel: this.tel,
       };
-      console.log(data);
 
       var res = await fetch("http://localhost/MonSalonline/apiUser/creatUser", {
         method: "POST",
@@ -59,6 +61,8 @@ export default {
       });
 
       if (res.status === 200) {
+        console.log(res)
+        //transformer les donness au niveau de la reponse au format object javascript
         const result = await res.json();
         if (result) {
           this.alert_msg = `<div
@@ -92,7 +96,6 @@ export default {
               <div>votre code de reference est: ${result.reference}</div>
             </div>`;
 
-          console.log(result.reference);
         }
       }
     },

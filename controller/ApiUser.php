@@ -69,7 +69,7 @@ class ApiUser
         $requets->time_out = $data->time_out;
         $requets->id_user = $res['id_user'];
         $requets->jour = $data->jour;
-        $requets->note = $data->note;
+        // $requets->note = $data->note;
 
         $result = $requets->recupererIdCreneau();
         $requets->id_cr = $result['id_cr'];

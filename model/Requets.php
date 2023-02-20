@@ -122,18 +122,18 @@ class Requets
     public function insertReservation()
     {
 
-        $query = "INSERT INTO reservation SET  id_user=:id_user,id_cr=:id_cr,jour=:jour,note=:note";
+        $query = "INSERT INTO reservation SET  id_user=:id_user,id_cr=:id_cr,jour=:jour";
         $strm = $this->conn->prepare($query);
 
         $this->id_user = htmlspecialchars(strip_tags($this->id_user));
         $this->id_cr = htmlspecialchars(strip_tags($this->id_cr));
         $this->jour = htmlspecialchars(strip_tags($this->jour));
-        $this->note = htmlspecialchars(strip_tags($this->note));
+        // $this->note = htmlspecialchars(strip_tags($this->note));
 
         $strm->bindParam(':id_user', $this->id_user);
         $strm->bindParam(':id_cr', $this->id_cr);
         $strm->bindParam(':jour', $this->jour);
-        $strm->bindParam(':note', $this->note);
+        // $strm->bindParam(':note', $this->note);
 
 
         if ($strm->execute()) {
@@ -147,19 +147,17 @@ class Requets
     {
 
 
-        $query = "UPDATE  reservation SET  id_cr=:id_cr,jour=:jour,note=:note WHERE id_reservation=:id_reservation";
+        $query = "UPDATE  reservation SET  id_cr=:id_cr,jour=:jour WHERE id_reservation=:id_reservation";
         $strm = $this->conn->prepare($query);
 
 
         $this->id_cr = htmlspecialchars(strip_tags($this->id_cr));
         $this->jour = htmlspecialchars(strip_tags($this->jour));
-        $this->note = htmlspecialchars(strip_tags($this->note));
         $this->id_reservation = htmlspecialchars(strip_tags($this->id_reservation));
 
 
         $strm->bindParam(':id_cr', $this->id_cr);
         $strm->bindParam(':jour', $this->jour);
-        $strm->bindParam(':note', $this->note);
         $strm->bindParam(':id_reservation', $this->id_reservation);
 
 
@@ -184,11 +182,12 @@ class Requets
 
 
         $query2 = "SELECT créneau.time_on,time_out,reservation.id_cr,jour
-        ,id_reservation,note FROM reservation INNER JOIN créneau ON  reservation.id_cr=créneau.id_cr WHERE reservation.id_user='$user'";
+        ,id_reservation FROM reservation INNER JOIN créneau ON  reservation.id_cr=créneau.id_cr WHERE reservation.id_user='$user'";
         $req2 = $this->conn->prepare($query2);
         $req2->execute();
         return $req2;
     }
+   
 
     // api modifier les reservations 
 
